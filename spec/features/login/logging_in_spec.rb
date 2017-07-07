@@ -1,16 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe "a user can login using github" do
-  include Capybara::DSL
   before (:each) do
-    Capybara.app = Apicuriouser::Application
     stub_omniauth
     visit root_path
   end
 
   it "has a login button" do
     expect(page.status_code).to eq 200
-    expect(find_link('Login')[:href]).to eq('https://github.com/login/oauth/authorize?client_id=6153c1ab28fd525b9111&scope=repo')
+    expect(find_link('Login')[:href]).to eq github_login_path
   end
 
   it "can log me in" do
@@ -21,22 +19,18 @@ RSpec.describe "a user can login using github" do
   end
 
   def stub_omniauth
-    # first, set OmniAuth to run in test mode
     OmniAuth.config.test_mode = true
-    # then, provide a set of fake oauth data that
-    # omniauth will use when a user tries to authenticate:
-    OmniAuth.config.mock_auth[:twitter] = OmniAuth::AuthHash.new({
+    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new({
       provider: 'github',
+      uid: "1234",
       extra: {
         raw_info: {
-          uid: "1234",
-          name: "squee",
-          screen_name: "KITTY!!!",
+          name: "Kristen (Squee) Mueller",
+          login: "squeemishly",
         }
       },
       credentials: {
-        token: "boudithecat",
-        secret: "sheswhereitsat"
+        token: ENV["github_user_token"],
       }
     })
   end
