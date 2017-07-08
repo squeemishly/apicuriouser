@@ -1,9 +1,9 @@
 class User < ApplicationRecord
   has_many :followers
   has_many :following
+  has_many :starred_repos
 
   def self.from_omniauth(auth_info)
-    # binding.pry
     where(uid: auth_info[:uid]).first_or_create do |user|
       user.uid = auth_info.uid
       user.name = auth_info.extra.raw_info.name
@@ -32,6 +32,17 @@ class User < ApplicationRecord
     end
   end
 
+  def create_starred_repos
+    starred_repos_list.each do |starred|
+      StarredRepo.find_or_create_by(starred_id: starred[:id]) do |s|
+        binding.pry
+        s.full_name = starred[:full_name]
+        s.user = self
+        s.save
+      end
+    end
+  end
+
   private
 
   def followers_list
@@ -41,6 +52,11 @@ class User < ApplicationRecord
 
   def following_list
     response = Faraday.get("https://api.github.com/users/#{screen_name}/following")
+    JSON.parse(response.body, symbolize_names: true)
+  end
+
+  def starred_repos_list
+    response = Faraday.get("https://api.github.com/users/#{screen_name}/starred")
     JSON.parse(response.body, symbolize_names: true)
   end
 end

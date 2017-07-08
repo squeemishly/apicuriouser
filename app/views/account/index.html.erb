@@ -2,7 +2,7 @@
 <div class="profile_pic"><%=  %></div>
 <table>
   <tr class="starred_repos">
-    <td>Starred Repos: </td><td><%=  %></td>
+    <td>Starred Repos: </td><td><%= @user.starred_repos.count %></td>
   </tr>
   <tr class="followers">
     <td>Followers: </td><td><%= @user.followers.count %></td>

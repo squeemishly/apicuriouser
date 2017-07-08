@@ -3,6 +3,7 @@ class AccountController < ApplicationController
     @user = User.find(current_user.id)
     @user.create_followers
     @user.create_following
-    # binding.pry
+    @user.create_starred_repos
+    binding.pry
   end
 end
