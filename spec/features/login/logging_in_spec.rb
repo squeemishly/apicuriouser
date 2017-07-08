@@ -17,21 +17,4 @@ RSpec.describe "a user can login using github" do
     expect(page).to have_content("squee")
     expect(page).to have_link("Logout")
   end
-
-  def stub_omniauth
-    OmniAuth.config.test_mode = true
-    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new({
-      provider: 'github',
-      uid: "1234",
-      extra: {
-        raw_info: {
-          name: "Kristen (Squee) Mueller",
-          login: "squeemishly",
-        }
-      },
-      credentials: {
-        token: ENV["github_user_token"],
-      }
-    })
-  end
 end

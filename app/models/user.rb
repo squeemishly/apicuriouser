@@ -24,7 +24,7 @@ class User < ApplicationRecord
   private
 
   def followers_list
-    response = Faraday.get("https://api.github.com/users/squeemishly/followers")
+    response = Faraday.get("https://api.github.com/users/#{screen_name}/followers")
     JSON.parse(response.body, symbolize_names: true)
   end
 end
