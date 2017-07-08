@@ -19,7 +19,7 @@ class User < ApplicationRecord
   end
 
   def create_followers
-    create_list("followers").each do |follower|
+    GithubService.create_list("followers", self).each do |follower|
       Follower.find_or_create_by(follower_uid: follower[:id]) do |f|
         f.user = self
         f.name = follower[:login]
@@ -29,7 +29,7 @@ class User < ApplicationRecord
   end
 
   def create_following
-    create_list("following").each do |following|
+    GithubService.create_list("following", self).each do |following|
       Following.find_or_create_by(following_id: following[:id]) do |f|
         f.name = following[:login]
         f.user = self
@@ -39,7 +39,7 @@ class User < ApplicationRecord
   end
 
   def create_starred_repos
-    create_list(type: "starred").each do |starred|
+    GithubService.create_list("starred", self).each do |starred|
       StarredRepo.find_or_create_by(starred_id: starred[:id]) do |s|
         s.full_name = starred[:full_name]
         s.user = self
@@ -47,13 +47,13 @@ class User < ApplicationRecord
       end
     end
   end
-
-  private
-
-  def create_list(type)
-    response = Faraday.get("https://api.github.com/users/#{screen_name}/#{type}")
-    JSON.parse(response.body, symbolize_names: true)
-  end
+  # 
+  # private
+  #
+  # def create_list(type)
+  #   response = Faraday.get("https://api.github.com/users/#{screen_name}/#{type}")
+  #   JSON.parse(response.body, symbolize_names: true)
+  # end
 
   # def followers_list
   #   response = Faraday.get("https://api.github.com/users/#{screen_name}/followers")

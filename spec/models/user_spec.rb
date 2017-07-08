@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-
-
   context "fields of data" do
     attr_reader :user
 
@@ -32,36 +30,40 @@ RSpec.describe User, type: :model do
     end
   end
 
-  context "relationships" do
-    attr_reader :user
+  VCR.use_cassette("user relationships") do
+    context "relationships" do
+      attr_reader :user
 
-    before(:all) do
-      stub_omniauth
-      @user = User.first
-    end
+      before(:all) do
+        stub_omniauth
+        @user = User.first
+      end
 
-    it "responds to followers" do
-      expect(user).to respond_to(:followers)
-    end
+      it "responds to followers" do
+        expect(user).to respond_to(:followers)
+      end
 
-    it "responds to followering" do
-      expect(user).to respond_to(:following)
+      it "responds to followering" do
+        expect(user).to respond_to(:following)
+      end
     end
   end
 
-  context "methods" do
-    attr_reader :user
+  VCR.use_cassette("user methods") do
+    context "methods" do
+      attr_reader :user
 
-    before(:all) do
-      stub_omniauth
-      @user = User.first
+      before(:all) do
+        stub_omniauth
+        @user = User.first
+      end
+
+      # it "can create a followers list" do
+      #   expect(Follower.count).to eq 0
+      #
+      #   user.create_followers
+      #   expect(Follower.count).to eq 4
+      # end
     end
-
-    # it "can create a followers list" do
-    #   expect(Follower.count).to eq 0
-    #
-    #   user.create_followers
-    #   expect(Follower.count).to eq 4
-    # end
   end
 end
