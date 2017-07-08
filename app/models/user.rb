@@ -13,7 +13,7 @@ class User < ApplicationRecord
 
   def create_followers
     followers_list.each do |follower|
-      Follower.find_or_create_by(follower_uid: follower["id"]) do |f|
+      Follower.find_or_create_by(follower_uid: follower[:id]) do |f|
         f.user = self
         f.name = follower[:login]
         f.save

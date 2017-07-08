@@ -1,5 +1,5 @@
-<div class="username"><%= current_user.screen_name %></div>
+<div class="username"><h1><%= current_user.screen_name %></h1></div>
 <div class="profile_pic"><%=  %></div>
-<div class="starred_repos"><%=  %></div>
-<div class="followers"><%= @followers %></div>
-<div class="following"><%=  %></div>
+<div class="starred_repos">Starred Repos: <%=  %></div>
+<div class="followers">Followers: <%= @user.followers.count %></div>
+<div class="following">Following: <%=  %></div>
