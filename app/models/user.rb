@@ -17,10 +17,11 @@ class User < ApplicationRecord
         f.user = self
         f.name = follower[:login]
         f.save
-        binding.pry
       end
     end
   end
+
+  private
 
   def followers_list
     response = Faraday.get("https://api.github.com/users/squeemishly/followers")
