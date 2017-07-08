@@ -12,8 +12,14 @@ class User < ApplicationRecord
     end
   end
 
+  def prep_user
+    create_followers
+    create_following
+    create_starred_repos
+  end
+
   def create_followers
-    followers_list.each do |follower|
+    create_list("followers").each do |follower|
       Follower.find_or_create_by(follower_uid: follower[:id]) do |f|
         f.user = self
         f.name = follower[:login]
@@ -23,7 +29,7 @@ class User < ApplicationRecord
   end
 
   def create_following
-    following_list.each do |following|
+    create_list("following").each do |following|
       Following.find_or_create_by(following_id: following[:id]) do |f|
         f.name = following[:login]
         f.user = self
@@ -33,7 +39,7 @@ class User < ApplicationRecord
   end
 
   def create_starred_repos
-    starred_repos_list.each do |starred|
+    create_list(type: "starred").each do |starred|
       StarredRepo.find_or_create_by(starred_id: starred[:id]) do |s|
         s.full_name = starred[:full_name]
         s.user = self
@@ -44,18 +50,23 @@ class User < ApplicationRecord
 
   private
 
-  def followers_list
-    response = Faraday.get("https://api.github.com/users/#{screen_name}/followers")
+  def create_list(type)
+    response = Faraday.get("https://api.github.com/users/#{screen_name}/#{type}")
     JSON.parse(response.body, symbolize_names: true)
   end
 
-  def following_list
-    response = Faraday.get("https://api.github.com/users/#{screen_name}/following")
-    JSON.parse(response.body, symbolize_names: true)
-  end
-
-  def starred_repos_list
-    response = Faraday.get("https://api.github.com/users/#{screen_name}/starred")
-    JSON.parse(response.body, symbolize_names: true)
-  end
+  # def followers_list
+  #   response = Faraday.get("https://api.github.com/users/#{screen_name}/followers")
+  #   JSON.parse(response.body, symbolize_names: true)
+  # end
+  #
+  # def following_list
+  #   response = Faraday.get("https://api.github.com/users/#{screen_name}/following")
+  #   JSON.parse(response.body, symbolize_names: true)
+  # end
+  #
+  # def starred_repos_list
+  #   response = Faraday.get("https://api.github.com/users/#{screen_name}/starred")
+  #   JSON.parse(response.body, symbolize_names: true)
+  # end
 end
