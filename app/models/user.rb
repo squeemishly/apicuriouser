@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :followers
+  has_many :following
 
   def self.from_omniauth(auth_info)
     # binding.pry
@@ -21,10 +22,25 @@ class User < ApplicationRecord
     end
   end
 
+  def create_following
+    following_list.each do |following|
+      Following.find_or_create_by(following_id: following[:id]) do |f|
+        f.name = following[:login]
+        f.user = self
+        f.save
+      end
+    end
+  end
+
   private
 
   def followers_list
     response = Faraday.get("https://api.github.com/users/#{screen_name}/followers")
+    JSON.parse(response.body, symbolize_names: true)
+  end
+
+  def following_list
+    response = Faraday.get("https://api.github.com/users/#{screen_name}/following")
     JSON.parse(response.body, symbolize_names: true)
   end
 end

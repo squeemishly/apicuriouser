@@ -43,6 +43,10 @@ RSpec.describe User, type: :model do
     it "responds to followers" do
       expect(user).to respond_to(:followers)
     end
+
+    it "responds to followering" do
+      expect(user).to respond_to(:following)
+    end
   end
 
   context "methods" do
