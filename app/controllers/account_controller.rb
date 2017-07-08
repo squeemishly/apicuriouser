@@ -4,6 +4,5 @@ class AccountController < ApplicationController
     @user.create_followers
     @user.create_following
     @user.create_starred_repos
-    binding.pry
   end
 end

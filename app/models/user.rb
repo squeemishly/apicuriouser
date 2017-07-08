@@ -35,7 +35,6 @@ class User < ApplicationRecord
   def create_starred_repos
     starred_repos_list.each do |starred|
       StarredRepo.find_or_create_by(starred_id: starred[:id]) do |s|
-        binding.pry
         s.full_name = starred[:full_name]
         s.user = self
         s.save
