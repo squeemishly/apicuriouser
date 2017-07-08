@@ -1,0 +1,9 @@
+<nav>
+  <% if current_user %>
+    Hello, <%= current_user.screen_name %>
+    <%= link_to "My Account", account_index_path %>
+    <%= link_to "Logout", logout_path, method: :delete %>
+  <% else %>
+    <%= link_to "Login", github_login_path %>
+  <% end %>
+</nav>

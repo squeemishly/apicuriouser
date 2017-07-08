@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170706212604) do
+ActiveRecord::Schema.define(version: 20170708023227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "followers", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "name"
+    t.string "follower_uid"
+    t.index ["user_id"], name: "index_followers_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "screen_name"
@@ -22,6 +29,8 @@ ActiveRecord::Schema.define(version: 20170706212604) do
     t.string "oauth_token_secret"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
   end
 
+  add_foreign_key "followers", "users"
 end
