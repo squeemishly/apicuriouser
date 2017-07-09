@@ -11,3 +11,9 @@
     <td>Following: </td><td><%= @user.following.count %></td>
   </tr>
 </table>
+
+<% @user.orgs.each do |org| %>
+  <div class="org">
+    <div class="name"><%= org.name %></div>
+  </div>
+<% end %>

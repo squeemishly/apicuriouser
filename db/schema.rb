@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170708190559) do
+ActiveRecord::Schema.define(version: 20170709210102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,13 @@ ActiveRecord::Schema.define(version: 20170708190559) do
     t.integer "following_id"
     t.bigint "user_id"
     t.index ["user_id"], name: "index_followings_on_user_id"
+  end
+
+  create_table "orgs", force: :cascade do |t|
+    t.string "name"
+    t.integer "org_id"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_orgs_on_user_id"
   end
 
   create_table "starred_repos", force: :cascade do |t|
@@ -48,5 +55,6 @@ ActiveRecord::Schema.define(version: 20170708190559) do
 
   add_foreign_key "followers", "users"
   add_foreign_key "followings", "users"
+  add_foreign_key "orgs", "users"
   add_foreign_key "starred_repos", "users"
 end

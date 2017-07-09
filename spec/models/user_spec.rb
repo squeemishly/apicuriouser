@@ -43,8 +43,16 @@ RSpec.describe User, type: :model do
         expect(user).to respond_to(:followers)
       end
 
-      it "responds to followering" do
+      it "responds to following" do
         expect(user).to respond_to(:following)
+      end
+
+      it "responds to starred_repos" do
+        expect(user).to respond_to(:starred_repos)
+      end
+
+      it "responds to orgs" do
+        expect(user).to respond_to(:orgs)
       end
     end
   end
