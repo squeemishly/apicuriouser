@@ -10,6 +10,7 @@ RSpec.describe User, type: :model do
       name: "George The Great",
       screen_name: "Georalicious",
       oauth_token: "oiarenduyo908aroeitn932rtoeoenaor",
+      pic: "arosednoahdyu"
       )
     end
 
@@ -27,6 +28,10 @@ RSpec.describe User, type: :model do
 
     it "has a oauth token" do
       expect(user.oauth_token).to eq "oiarenduyo908aroeitn932rtoeoenaor"
+    end
+
+    it "has a pic" do
+      expect(user.pic).to eq "arosednoahdyu"
     end
   end
 
