@@ -12,8 +12,16 @@
   </tr>
 </table>
 
+<h3>Org</h3>
 <% @user.orgs.each do |org| %>
   <div class="org">
     <div class="name"><%= org.name %></div>
+  </div>
+<% end %>
+
+<h3>Repos</h3>
+<% @user.repos.each do |repo| %>
+  <div class="repo">
+    <div class="name"><%= repo.name %></div>
   </div>
 <% end %>

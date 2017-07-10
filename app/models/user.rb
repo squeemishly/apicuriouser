@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_many :following
   has_many :starred_repos
   has_many :orgs
+  has_many :repos
 
   def self.from_omniauth(auth_info)
     where(uid: auth_info[:uid]).first_or_create do |user|
@@ -18,6 +19,7 @@ class User < ApplicationRecord
     create_following
     create_starred_repos
     create_orgs
+    create_repos
   end
 
   def create_followers
@@ -56,6 +58,16 @@ class User < ApplicationRecord
         o.name = org[:login]
         o.user = self
         o.save
+      end
+    end
+  end
+
+  def create_repos
+    GithubService.create_list("repos", self).each do |repo|
+      Repo.find_or_create_by(repo_uid: repo[:id]) do |r|
+        r.name = repo[:name]
+        r.user = self
+        r.save
       end
     end
   end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "I can see a list of my organizations" do
+RSpec.describe "I can see a list of my repos" do
   before(:all) do
     stub_omniauth
   end
@@ -12,7 +12,7 @@ RSpec.describe "I can see a list of my organizations" do
     expect(current_path).to eq '/account'
     # I will see a page displaying my recent commits
     # within first(".org")
-    expect(page).to have_selector ".org"
+    expect(page).to have_selector ".repo"
     expect(page).to have_selector ".name"
   end
 end
