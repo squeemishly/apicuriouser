@@ -11,6 +11,7 @@ class User < ApplicationRecord
       user.name = auth_info.extra.raw_info.name
       user.screen_name = auth_info.extra.raw_info.login
       user.oauth_token = auth_info.credentials.token
+      user.pic = auth_info.extra.raw_info.avatar_url
     end
   end
 

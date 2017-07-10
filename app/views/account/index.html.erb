@@ -1,5 +1,5 @@
 <div class="username"><h1><%= current_user.screen_name %></h1></div>
-<div class="profile_pic"><%=  %></div>
+<div class="profile_pic"><img src=<%= @user.pic %>></div>
 <table>
   <tr class="starred_repos">
     <td>Starred Repos: </td><td><%= @user.starred_repos.count %></td>
