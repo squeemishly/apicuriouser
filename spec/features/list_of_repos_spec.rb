@@ -11,7 +11,6 @@ RSpec.describe "I can see a list of my repos" do
     click_on "My Account"
     expect(current_path).to eq '/account'
     # I will see a page displaying my recent commits
-    # within first(".org")
     expect(page).to have_selector ".repo"
     expect(page).to have_selector ".name"
   end

@@ -22,6 +22,6 @@
 <h3>Repos</h3>
 <% @user.repos.each do |repo| %>
   <div class="repo">
-    <div class="name"><%= repo.name %></div>
+    <div class="name"><%= link_to repo.name, "https://github.com/squeemishly/#{repo.name}" %></div>
   </div>
 <% end %>
